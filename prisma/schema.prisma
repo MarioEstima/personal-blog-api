@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Admin {
+  id           Int      @id @default(1)
+  name         String   @db.VarChar(100)
+  email        String   @unique @db.VarChar(191)
+  passwordHash String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Post {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(180)
+  slug        String     @unique @db.VarChar(200)
+  excerpt     String?    @db.VarChar(300)
+  content     String     @db.LongText
+  coverImage  String?    @db.VarChar(500)
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+
+  categoryId  Int?
+  category    Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  tags        Tag[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(100)
+  slug      String   @unique @db.VarChar(120)
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(80)
+  slug      String   @unique @db.VarChar(100)
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id        Int      @id @default(1)
+  name      String   @db.VarChar(100)
+  bio       String?  @db.Text
+  avatarUrl String?  @db.VarChar(500)
+  location  String?  @db.VarChar(150)
+  website   String?  @db.VarChar(255)
+  github    String?  @db.VarChar(255)
+  linkedin  String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
