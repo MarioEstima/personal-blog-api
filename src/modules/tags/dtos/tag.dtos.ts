@@ -1,16 +1,9 @@
 import { z } from "zod";
-
-const slugSchema = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .min(1)
-  .max(100)
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug inválido (letras minúsculas, números e hífens)");
+import { slugSchema } from "../../../shared/dtos/slug.dtos.js";
 
 export const createTagSchema = z.object({
-  name: z.string().trim().min(1, "Nome é obrigatório").max(80),
-  slug: slugSchema,
+  name: z.string().trim().min(1, "Nome é obrigatório").max(80, "Máximo de 80 caracteres"),
+  slug: slugSchema(100),
 });
 export type CreateTagDto = z.infer<typeof createTagSchema>;
 
