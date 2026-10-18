@@ -23,12 +23,12 @@ export class AuthService {
   async register(data: RegisterDto): Promise<Session> {
     const existing = await prisma.admin.findFirst();
     if (existing) throw new AppError(409, "Já existe um admin registado — faça login");
-
+    const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
     const admin = await prisma.admin.create({
       data: {
         name: data.name,
         email: data.email,
-        passwordHash: await bcrypt.hash(data.password, SALT_ROUNDS),
+        passwordHash: hashedPassword,
       },
     });
 
