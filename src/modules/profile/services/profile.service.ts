@@ -5,14 +5,14 @@ import type { UpdateProfileDto } from "../dtos/profile.dtos.js";
 const PROFILE_ID = 1;
 
 export class ProfileService {
-  get() {
+  getMe() {
     return prisma.profile.findUnique({ where: { id: PROFILE_ID } });
   }
 
-  async update(dto: UpdateProfileDto) {
-    const current = await this.get();
+  async updateMe(dto: UpdateProfileDto) {
+    const me = await this.getMe();
 
-    if (current) {
+    if (me) {
       return prisma.profile.update({ where: { id: PROFILE_ID }, data: dto });
     }
 
