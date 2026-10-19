@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📝 Personal Blog API
+# Personal Blog API
 
 **API REST de um blog pessoal com painel de administração**
 
@@ -16,15 +16,15 @@
 
 ---
 
-## ✨ Destaques
+## Destaques
 
-- 🔐 **Autenticação JWT** — registo e login de admin, rotas protegidas por middleware
-- ✅ **Validação com Zod** — schemas partilhados entre DTOs e middlewares, mensagens em português
-- 🧱 **Arquitetura modular** — cada domínio (`posts`, `auth`, `categories`, `tags`, `profile`) auto-contido
-- 🗃️ **Prisma ORM** — tipagem forte em todas as queries, migrations versionadas, zero SQL à mão
-- 🧨 **Erros centralizados** — handlers globais de erro e 404 com respostas consistentes
+- **Autenticação JWT** — registo e login de admin, rotas protegidas por middleware
+- **Validação com Zod** — schemas partilhados entre DTOs e middlewares, mensagens em português
+- **Arquitetura modular** — cada domínio (`posts`, `auth`, `categories`, `tags`, `profile`) auto-contido
+- **Prisma ORM** — tipagem forte em todas as queries, migrations versionadas, zero SQL à mão
+- **Erros centralizados** — handlers globais de erro e 404 com respostas consistentes
 
-## 🛠 Stack
+## Stack
 
 | Camada | Tecnologia |
 | --- | --- |
@@ -36,7 +36,7 @@
 | Auth | JWT (`jsonwebtoken`) + bcrypt |
 | Linguagem | TypeScript (NodeNext) |
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 git clone git@github.com:MarioEstima/personal-blog-api.git
@@ -56,7 +56,7 @@ npm run dev            # http://localhost:3000
 
 </details>
 
-## ⚙️ Variáveis de ambiente
+## Variáveis de ambiente
 
 | Variável | Descrição |
 | --- | --- |
@@ -65,9 +65,9 @@ npm run dev            # http://localhost:3000
 | `DATABASE_URL` | `mysql://user:password@localhost:3306/personal_blog` |
 | `JWT_TOKEN` | Segredo usado para assinar os tokens JWT |
 
-## 📖 Endpoints
+## Endpoints
 
-Todas as rotas ficam sob `/api`. Rotas marcadas com 🔒 exigem header `Authorization: Bearer <token>`.
+Todas as rotas ficam sob `/api`. Rotas marcadas com (auth) exigem header `Authorization: Bearer <token>`.
 
 ### Auth
 
@@ -75,7 +75,7 @@ Todas as rotas ficam sob `/api`. Rotas marcadas com 🔒 exigem header `Authoriz
 | --- | --- | --- |
 | POST | `/api/auth/register` | Regista o admin (primeiro utilizador) |
 | POST | `/api/auth/login` | Autentica e devolve um JWT |
-| GET | `/api/auth/me` | 🔒 Dados do admin autenticado |
+| GET | `/api/auth/me` | (auth) Dados do admin autenticado |
 
 ### Posts
 
@@ -83,11 +83,11 @@ Todas as rotas ficam sob `/api`. Rotas marcadas com 🔒 exigem header `Authoriz
 | --- | --- | --- |
 | GET | `/api/posts` | Lista posts publicados (paginação e filtros) |
 | GET | `/api/posts/:slug` | Detalhe de um post pelo slug |
-| GET | `/api/posts/admin` | 🔒 Lista todos os posts (rascunhos incluídos) |
-| GET | `/api/posts/admin/:id` | 🔒 Detalhe de qualquer post |
-| POST | `/api/posts` | 🔒 Cria um post |
-| PUT | `/api/posts/:id` | 🔒 Atualiza um post |
-| DELETE | `/api/posts/:id` | 🔒 Remove um post |
+| GET | `/api/posts/admin` | (auth) Lista todos os posts (rascunhos incluídos) |
+| GET | `/api/posts/admin/:id` | (auth) Detalhe de qualquer post |
+| POST | `/api/posts` | (auth) Cria um post |
+| PUT | `/api/posts/:id` | (auth) Atualiza um post |
+| DELETE | `/api/posts/:id` | (auth) Remove um post |
 
 ### Categories e Tags
 
@@ -95,19 +95,19 @@ Todas as rotas ficam sob `/api`. Rotas marcadas com 🔒 exigem header `Authoriz
 | --- | --- | --- |
 | GET | `/api/categories` · `/api/tags` | Lista |
 | GET | `/api/categories/:id` · `/api/tags/:id` | Detalhe |
-| POST | `/api/categories` · `/api/tags` | 🔒 Cria |
-| PUT | `/api/categories/:id` · `/api/tags/:id` | 🔒 Atualiza |
-| DELETE | `/api/categories/:id` · `/api/tags/:id` | 🔒 Remove |
+| POST | `/api/categories` · `/api/tags` | (auth) Cria |
+| PUT | `/api/categories/:id` · `/api/tags/:id` | (auth) Atualiza |
+| DELETE | `/api/categories/:id` · `/api/tags/:id` | (auth) Remove |
 
 ### Profile e Health
 
 | Método | Rota | Descrição |
 | --- | --- | --- |
 | GET | `/api/profile` | Perfil público (registo único) |
-| PUT | `/api/profile` | 🔒 Atualiza o perfil |
+| PUT | `/api/profile` | (auth) Atualiza o perfil |
 | GET | `/health` | Health check (estado da base de dados) |
 
-## 📂 Estrutura
+## Estrutura
 
 ```
 src/
@@ -125,7 +125,7 @@ src/
 
 Cada módulo segue a mesma estrutura interna: `dtos/` (schemas Zod), `services/` (regras de negócio + Prisma), `controllers/` (HTTP), `routes/` (definição das rotas).
 
-## 📜 Scripts
+## Scripts
 
 | Comando | Descrição |
 | --- | --- |
@@ -133,7 +133,7 @@ Cada módulo segue a mesma estrutura interna: `dtos/` (schemas Zod), `services/`
 | `npm run build` | Gera o cliente Prisma e compila para `dist/` |
 | `npm start` | Corre a versão compilada (`dist/server.js`) |
 
-## 📝 Notas
+## Notas
 
 - O cliente Prisma é gerado para `src/generated/` (não é commitado); `npm run dev` e `npm run build` cuidam disso automaticamente.
 - Todas as queries passam pela ORM Prisma — não há SQL escrito à mão.
@@ -141,5 +141,5 @@ Cada módulo segue a mesma estrutura interna: `dtos/` (schemas Zod), `services/`
 ---
 
 <div align="center">
-<sub>Feito com 💙 por Mario Estima</sub>
+<sub>Feito por Mario Estima</sub>
 </div>
